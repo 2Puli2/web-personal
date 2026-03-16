@@ -1,0 +1,298 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ── Keyframes ────────────────────────────────────────
+@keyframes decoSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes decoPulsePrimary {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba($color-primary, 0.8); }
+  50%       { opacity: 0.4; box-shadow: 0 0 4px rgba($color-primary, 0.3); }
+}
+@keyframes decoPulseSecondary {
+  0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba($color-secondary, 0.9); }
+  50%       { opacity: 0.4; box-shadow: 0 0 4px rgba($color-secondary, 0.3); }
+}
+@keyframes decoPulseCyan {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba($color-accent-1, 0.8); }
+  50%       { opacity: 0.4; box-shadow: 0 0 4px rgba($color-accent-1, 0.3); }
+}
+
+// ── Component ────────────────────────────────────────
+.home {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 70px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+
+  // ── Background glows
+  &__bg-glow {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    filter: blur(110px);
+    pointer-events: none;
+    opacity: 0;
+
+    &:first-of-type {
+      background: radial-gradient(circle, rgba($color-primary, 0.13) 0%, transparent 70%);
+      top: -10%;
+      left: -15%;
+      animation: fadeIn 1.4s ease 0.2s forwards;
+    }
+
+    &--secondary {
+      background: radial-gradient(circle, rgba($color-secondary, 0.12) 0%, transparent 70%);
+      bottom: -12%;
+      right: -8%;
+      animation: fadeIn 1.4s ease 0.5s forwards;
+    }
+  }
+
+  // ── Hero grid
+  &__hero {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 $spacing-3xl;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+  }
+
+  // ── Left: content
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $spacing-3xl 0;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.3s forwards;
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xl;
+  }
+
+  ::depp &__buttons {
+    background-color: $color-accent-1;
+  }
+
+  &__tag-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-primary;
+    box-shadow: 0 0 8px rgba($color-accent-1, 0.9);
+    flex-shrink: 0;
+    animation: decoPulseCyan 2.5s ease-in-out infinite;
+  }
+
+  &__greeting {
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: 5.5rem;
+    font-weight: $font-weight-bold;
+    color: $color-text-heading;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 $spacing-lg;
+
+    &--accent {
+      color: $color-secondary;
+      display: block;
+      @include neon-text-glow($color-secondary-dark);
+    }
+  }
+
+  &__divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, $color-secondary 0%, $color-primary 100%);
+    box-shadow: 0 0 12px rgba($color-primary, 0.5);
+    margin-bottom: $spacing-lg;
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-size: $font-size-md;
+    color: $color-text-muted;
+    letter-spacing: 0.04em;
+    margin: 0 0 $spacing-2xl;
+    padding-left: $spacing-md;
+    border-left: 2px solid rgba($color-secondary, 0.65);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    align-items: center;
+  }
+
+  // ── Right: decorative panel
+  &__deco {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 400px;
+  }
+
+  &__deco-ring {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba($color-secondary-light, 0.35);
+    box-shadow: 0 0 20px rgba($color-secondary-light, 0.22);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba($color-primary, 0.2);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 56px;
+      border-radius: 50%;
+      border: 1.5px dashed $color-secondary;
+      box-shadow: 0 0 14px rgba($color-primary-light, 0.55);
+      animation: decoSpin 22s linear infinite;
+    }
+  }
+
+  &__deco-dot {
+    position: absolute;
+    border-radius: 50%;
+
+    &--1 {
+      width: 10px;
+      height: 10px;
+      top: 12px;
+      right: 42px;
+      background: $color-secondary-dark;
+      box-shadow: 0 0 12px rgba($color-secondary-dark, 0.9);
+      animation: decoPulsePrimary 3s ease-in-out infinite;
+    }
+
+    &--2 {
+      width: 7px;
+      height: 7px;
+      bottom: 38px;
+      left: 22px;
+      background: $color-primary;
+      box-shadow: 0 0 8px rgba($color-primary, 0.85);
+      animation: decoPulseCyan 3s ease-in-out 1s infinite;
+    }
+
+    &--3 {
+      width: 5px;
+      height: 5px;
+      top: 64px;
+      left: 2px;
+      background: $color-secondary;
+      box-shadow: 0 0 8px rgba($color-secondary, 0.8);
+      animation: decoPulseSecondary 3s ease-in-out 1.8s infinite;
+    }
+  }
+
+  &__deco-label {
+    position: absolute;
+    bottom: $spacing-xl;
+    right: $spacing-xl;
+    font-family: $font-heading;
+    font-size: $font-size-xs;
+    color: rgba($color-secondary, 0.5);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0;
+    writing-mode: vertical-rl;
+  }
+}
+
+// ── Tablet ───────────────────────────────────────────
+@include respond-to('tablet') {
+  .home {
+    align-items: flex-start;
+
+    &__hero {
+      grid-template-columns: 1fr;
+      padding: $spacing-xl $spacing-xl;
+      min-height: auto;
+    }
+
+    &__content {
+      padding: $spacing-xl 0 $spacing-2xl;
+    }
+
+    &__name {
+      font-size: 3.5rem;
+    }
+
+    &__deco {
+      display: none;
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
+
+// ── Mobile ───────────────────────────────────────────
+@include respond-to('mobile') {
+  .home {
+    &__hero {
+      padding: $spacing-lg $spacing-md;
+    }
+
+    &__name {
+      font-size: 2.6rem;
+    }
+
+    &__subtitle {
+      font-size: $font-size-base;
+      margin-bottom: $spacing-3xl;
+    }
+
+    &__actions {
+      width: 100%;
+      margin-top: $spacing-2xl;
+
+      .neon-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        color: $color-hover;
+      }
+    }
+  }
+}

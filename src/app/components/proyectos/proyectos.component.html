@@ -1,0 +1,35 @@
+<section class="section-page" [class.visible]="isVisible">
+  <div class="section-page__container">
+    <a routerLink="/home" class="section-page__back">← Volver a home</a>
+    <div class="section-page__header">
+      <h1 class="section-page__title">Proyectos</h1>
+      <div class="section-page__accent-line"></div>
+    </div>
+    <p class="section-page__intro-text">
+      Listado de proyectos destacados con enfoque en diseño, innovación y nuevas tecnologías.
+      Espacio reservado para mi portfolio.
+    </p>
+    <div class="projects-grid">
+      <div class="project-card" *ngFor="let project of projects; let i = index">
+        <div class="project-card__header">
+          <svg class="project-card__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="6" width="32" height="28" rx="3"/>
+            <line x1="4" y1="14" x2="36" y2="14"/>
+            <circle cx="10" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+            <circle cx="16" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+            <polyline points="14 22 10 26 14 30"/>
+            <polyline points="24 22 28 26 24 30"/>
+            <line x1="20" y1="20" x2="18" y2="32"/>
+          </svg>
+          <span class="project-card__number">0{{ i + 1 }}</span>
+        </div>
+        <h3 class="project-card__title">{{ project.title }}</h3>
+        <p class="project-card__desc">{{ project.description }}</p>
+        <div class="project-card__tags">
+          <span class="project-card__tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

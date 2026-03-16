@@ -1,0 +1,123 @@
+// ═══════════════════════════════════════════════════
+// CYBERPUNK NEON THEME — VARIABLES
+// ═══════════════════════════════════════════════════
+
+// ── Colors ─────────────────────────────────────────
+$color-bg-main: #01010f;
+$color-bg-dark: #000008;
+$color-bg-card: #0a0a1a;
+$color-bg-card-hover: #12122a;
+
+// Primary — Hot magenta/pink (main color for text, borders, hovers)
+$color-primary: #d974c3;
+$color-primary-light: #ff3ba8;
+$color-primary-dark: #a3005a;
+
+// Secondary — Lilac (decorative, accents, gradients)
+$color-secondary: #c044ff;
+$color-secondary-light: #d77bff;
+$color-secondary-dark: #8a25cc;
+
+// Accent 1 — Electric cyan (tech, detail, cool contrast)
+$color-accent-1: #00d4ff;
+$color-accent-1-dark: #0099bb;
+
+// Accent 2 — Electric yellow (energy, highlights)
+$color-accent-2: #ffeb3b;
+
+// Legacy hover colors (kept for reference)
+$color-hover-1: #ff008a;
+$color-hover-1-dark: #a3005a;
+
+// Active warm hover — swap this variable to change globally
+$color-hover: $color-primary;
+
+$color-text: #e8e8f0;
+$color-text-muted: #8888aa;
+$color-text-heading: #ffffff;
+
+$color-border: rgba(192, 68, 255, 0.2);
+$color-border-hover: rgba(192, 68, 255, 0.5);
+
+// Note: Border colors use secondary (#c044ff) for decorative lilac accent on dark backgrounds
+
+// ── Typography ─────────────────────────────────────
+$font-heading: 'Orbitron', sans-serif;
+$font-body: 'Exo 2', sans-serif;
+$font-alt-audiowide: 'Audiowide', sans-serif;
+$font-alt-teko: 'Teko', sans-serif;
+$font-alt-michroma: 'Michroma', sans-serif;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-md: 1.125rem;
+$font-size-lg: 1.5rem;
+$font-size-xl: 2rem;
+$font-size-2xl: 3rem;
+$font-size-3xl: 4.5rem;
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// ── Glow ───────────────────────────────────────────
+$glow-primary-sm: 0 0 5px rgba($color-primary, 0.4);
+$glow-primary-md: 0 0 10px rgba($color-primary, 0.3),
+                   0 0 20px rgba($color-primary, 0.15);
+$glow-primary-lg: 0 0 15px rgba($color-primary, 0.4),
+                   0 0 30px rgba($color-primary, 0.2),
+                   0 0 60px rgba($color-primary, 0.1);
+
+$glow-secondary-sm: 0 0 5px rgba($color-secondary, 0.4);
+$glow-secondary-md: 0 0 10px rgba($color-secondary, 0.3),
+                    0 0 20px rgba($color-secondary, 0.15);
+$glow-cyan-sm: 0 0 5px rgba($color-accent-1, 0.4);
+$glow-cyan-md: 0 0 10px rgba($color-accent-1, 0.3),
+               0 0 20px rgba($color-accent-1, 0.15);
+
+// ── Gradients ──────────────────────────────────────
+$gradient-bg: linear-gradient(
+  135deg,
+  $color-bg-main 0%,
+  #050520 50%,
+  $color-bg-main 100%
+);
+$gradient-card: linear-gradient(
+  180deg,
+  rgba($color-secondary, 0.05) 0%,
+  transparent 100%
+);
+$gradient-primary: linear-gradient(135deg, $color-secondary 0%, $color-primary 100%);
+
+// ── Spacing ────────────────────────────────────────
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-2xl: 3rem;
+$spacing-3xl: 5rem;
+
+// ── Border Radius ──────────────────────────────────
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+
+// ── Transitions ────────────────────────────────────
+$transition-fast: 0.2s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+$transition-panel: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ── Breakpoints ────────────────────────────────────
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1440px;
+
+// ── Z-Index ────────────────────────────────────────
+$z-navbar: 1000;
+$z-overlay: 900;

@@ -1,0 +1,102 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.section-page {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-lg;
+
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-card {
+  background: $color-bg-card;
+  border: 1.5px solid rgba($color-secondary, 0.35);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  transition: all $transition-base;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    border-color: rgba($color-secondary, 0.7);
+    background: $color-bg-card-hover;
+    transform: translateY(-4px);
+    @include neon-glow($color-secondary, 'md');
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+    color: $color-secondary-light;
+    filter: drop-shadow(0 0 10px rgba($color-secondary-light, 0.5));
+  }
+
+  &__number {
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    color: rgba($color-primary, 0.12);
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-base;
+    color: $color-text-heading;
+    margin-bottom: $spacing-sm;
+    letter-spacing: 0.04em;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    line-height: 1.7;
+    margin-bottom: $spacing-lg;
+    flex: 1;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+
+  &__tag {
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: $color-secondary;
+    background: rgba($color-secondary, 0.08);
+    border: 1px solid rgba($color-secondary, 0.2);
+    border-radius: $radius-sm;
+    padding: 2px $spacing-sm;
+    letter-spacing: 0.04em;
+    transition: all $transition-fast;
+
+    .project-card:hover & {
+      background: rgba($color-secondary, 0.12);
+      border-color: rgba($color-secondary, 0.35);
+    }
+  }
+}

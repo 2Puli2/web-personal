@@ -1,0 +1,41 @@
+<section class="home" [class.visible]="isVisible">
+  <div class="home__bg-glow"></div>
+  <div class="home__bg-glow home__bg-glow--secondary"></div>
+
+  <div class="home__hero">
+
+    <div class="home__content">
+      <div class="home__tag">
+        <span class="home__tag-dot"></span>
+        <p class="home__greeting">Bienvenido al portfolio de</p>
+      </div>
+      <h1 class="home__name">
+        Sergio<br>
+        <span class="home__name--accent">Pulido</span>
+      </h1>
+      <div class="home__divider"></div>
+      <p class="home__subtitle">Backend developer &amp; Web designer </p>
+      <div class="home__actions">
+        <button class="neon-btn" (click)="navigateTo('/quien-soy')">
+          <span class="neon-btn__text">Quién soy</span> 
+        </button>
+        <button class="neon-btn" (click)="navigateTo('/formacion-experiencia')">
+          <span class="neon-btn__text">Formación</span>
+        </button>
+        <button class="neon-btn" (click)="navigateTo('/proyectos')">
+          <span class="neon-btn__text">Proyectos</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="home__deco" aria-hidden="true">
+      <div class="home__deco-ring">
+        <span class="home__deco-dot home__deco-dot--1"></span>
+        <span class="home__deco-dot home__deco-dot--2"></span>
+        <span class="home__deco-dot home__deco-dot--3"></span>
+      </div>
+      <p class="home__deco-label">Portfolio 2026</p>
+    </div>
+
+  </div>
+</section>

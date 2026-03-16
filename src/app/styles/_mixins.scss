@@ -1,0 +1,58 @@
+@use 'variables' as *;
+
+// ── Responsive ─────────────────────────────────────
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'mobile' {
+    @media (max-width: $bp-mobile) { @content; }
+  } @else if $breakpoint == 'tablet' {
+    @media (max-width: $bp-tablet) { @content; }
+  } @else if $breakpoint == 'desktop' {
+    @media (max-width: $bp-desktop) { @content; }
+  } @else if $breakpoint == 'wide' {
+    @media (max-width: $bp-wide) { @content; }
+  }
+}
+
+// ── Glow Effects ───────────────────────────────────
+@mixin neon-glow($color: $color-primary, $intensity: 'md') {
+  @if $intensity == 'sm' {
+    box-shadow: 0 0 5px rgba($color, 0.4);
+  } @else if $intensity == 'md' {
+    box-shadow: 0 0 10px rgba($color, 0.3), 0 0 20px rgba($color, 0.15);
+  } @else if $intensity == 'lg' {
+    box-shadow: 0 0 15px rgba($color, 0.4),
+                0 0 30px rgba($color, 0.2),
+                0 0 60px rgba($color, 0.1);
+  }
+}
+
+@mixin neon-text-glow($color: $color-primary) {
+  text-shadow: 0 0 8px rgba($color, 0.6), 0 0 20px rgba($color, 0.3);
+}
+
+@mixin neon-border($color: $color-primary, $width: 1px) {
+  border: $width solid rgba($color, 0.3);
+
+  &:hover {
+    border-color: rgba($color, 0.6);
+  }
+}
+
+// ── Layout ─────────────────────────────────────────
+@mixin glass-panel {
+  background: rgba($color-bg-card, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid $color-border;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,179 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ═══════════════════════════════════════════════════
+// GLOBAL THEME — Base styles & reusable components
+// ═══════════════════════════════════════════════════
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: $color-text;
+  background-color: $color-bg-main;
+  background-image: $gradient-bg;
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-heading;
+  color: $color-text-heading;
+  letter-spacing: 0.05em;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-hover;
+  }
+}
+
+::selection {
+  background: rgba($color-primary, 0.3);
+  color: $color-text-heading;
+}
+
+// ── Custom scrollbar ───────────────────────────────
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba($color-primary, 0.4);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba($color-primary, 0.6);
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// NEON BUTTON — reusable everywhere
+// ═══════════════════════════════════════════════════
+.neon-btn {
+  position: relative;
+  display: inline-block;
+  padding: $spacing-md $spacing-xl;
+  background: transparent;
+  border: 1px solid rgba($color-secondary-dark, 0.4);
+  border-radius: $radius-md;
+  color: $color-secondary-light;
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all $transition-base;
+  text-align: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba($color-hover-1, 0.1), transparent);
+    transition: left $transition-slow;
+  }
+
+  &:hover {
+    border-color: $color-hover;
+    color: $color-text-heading;
+    @include neon-glow($color-hover, 'md');
+    transform: scale(1.05);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--sm {
+    padding: $spacing-sm $spacing-lg;
+    font-size: $font-size-xs;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SECTION PAGE — shared layout for detail views
+// ═══════════════════════════════════════════════════
+.section-page {
+  min-height: calc(100vh - 70px);
+  padding: 100px $spacing-xl $spacing-3xl;
+
+  &__container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    margin-bottom: $spacing-2xl;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__header {
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    color: $color-secondary;
+    margin-bottom: $spacing-md;
+    @include neon-text-glow($color-primary);
+
+    @include respond-to('tablet') {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__accent-line {
+    width: 80px;
+    height: 2px;
+    background: $gradient-primary;
+    box-shadow: $glow-primary-sm;
+  }
+
+  &__intro-text {
+    font-size: $font-size-md;
+    color: $color-text;
+    line-height: 1.8;
+    margin-bottom: $spacing-2xl;
+    max-width: 700px;
+  }
+}
