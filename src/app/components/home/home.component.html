@@ -1,41 +1,243 @@
-<section class="home" [class.visible]="isVisible">
-  <div class="home__bg-glow"></div>
-  <div class="home__bg-glow home__bg-glow--secondary"></div>
+<section id="inicio" class="hero">
+  <div class="hero__glow hero__glow--primary"></div>
+  <div class="hero__glow hero__glow--secondary"></div>
 
-  <div class="home__hero">
+  <div class="hero__container">
 
-    <div class="home__content">
-      <div class="home__tag">
-        <span class="home__tag-dot"></span>
-        <p class="home__greeting">Bienvenido al portfolio de</p>
+    <div class="hero__content">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        Disponible para nuevos retos
       </div>
-      <h1 class="home__name">
-        Sergio<br>
-        <span class="home__name--accent">Pulido</span>
+
+      <h1 class="hero__title">
+        Hola, soy<br>
+        <span class="hero__title--accent">Sergio Pulido</span>
       </h1>
-      <div class="home__divider"></div>
-      <p class="home__subtitle">Backend developer &amp; Web designer </p>
-      <div class="home__actions">
-        <button class="neon-btn" (click)="navigateTo('/quien-soy')">
-          <span class="neon-btn__text">Quién soy</span> 
-        </button>
-        <button class="neon-btn" (click)="navigateTo('/formacion-experiencia')">
-          <span class="neon-btn__text">Formación</span>
-        </button>
-        <button class="neon-btn" (click)="navigateTo('/proyectos')">
-          <span class="neon-btn__text">Proyectos</span>
-        </button>
+
+      <p class="hero__role">Desarrollador frontend junior | Web designer</p>
+
+      <p class="hero__bio">
+        Estoy dando mis primeros pasos en el mundo profesional del desarrollo web. Disfruto aprendiendo,
+        mejorando cada día y poniendo esfuerzo en todo lo que hago.
+        En esta web podéis conocerme mejor y ver que estoy haciendo.
+      </p>
+
+      <div class="hero__cta">
+        <a href="#contacto" class="neon-btn">
+          Contáctame
+        </a>
+        <a href="assets/Sergio_Pulido_CV.pdf" download="Sergio_Pulido_CV.pdf" class="neon-btn neon-btn--accent">
+          Consulta mi CV
+        </a>
+        <a href="#proyectos" class="hero__cta-ghost">Ver proyectos →</a>
+        
       </div>
+
     </div>
 
-    <div class="home__deco" aria-hidden="true">
-      <div class="home__deco-ring">
-        <span class="home__deco-dot home__deco-dot--1"></span>
-        <span class="home__deco-dot home__deco-dot--2"></span>
-        <span class="home__deco-dot home__deco-dot--3"></span>
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__ring hero__ring--outer"></div>
+      <div class="hero__ring hero__ring--mid"></div>
+      <div class="hero__ring hero__ring--inner"></div>
+      <span class="hero__orbit hero__orbit--1"></span>
+      <span class="hero__orbit hero__orbit--2"></span>
+      <span class="hero__orbit hero__orbit--3"></span>
+    </div>
+
+  </div>
+
+  <a href="#skills" class="hero__scroll" aria-label="Ir a skills">
+    <span class="hero__scroll-text">scroll</span>
+    <div class="hero__scroll-line"></div>
+  </a>
+</section>
+
+
+<section id="skills" class="skills">
+  <div class="skills__container">
+
+    <div class="section-header reveal">
+      <span class="section-header__label">Stack técnico</span>
+      <h2 class="section-header__title">Tecnologías</h2>
+      <div class="section-header__line"></div>
+    </div>
+
+    <div class="skills__grid">
+      <div class="skill-chip reveal"
+           *ngFor="let skill of skills; let i = index"
+           [style.transition-delay]="(i * 55) + 'ms'">
+        <span class="skill-chip__dot"
+              [style.background]="skill.color"
+              [style.box-shadow]="'0 0 7px ' + skill.color + '99'"></span>
+        <span class="skill-chip__name">{{ skill.name }}</span>
       </div>
-      <p class="home__deco-label">Portfolio 2026</p>
     </div>
 
   </div>
 </section>
+
+
+<section id="sobre-mi" class="about">
+  <div class="about__container">
+
+    <div class="section-header reveal">
+      <span class="section-header__label">Mi historia</span>
+      <h2 class="section-header__title">Sobre mí</h2>
+      <div class="section-header__line"></div>
+    </div>
+
+    <div class="about__layout">
+
+      <div class="about__intro reveal">
+        <p>
+          Soy <strong>Sergio Pulido</strong>, un desarrollador de Barcelona con formación en DAM
+          que lleva poco en el sector pero que ha apostado fuerte por el desarrollo web desde el principio.
+        </p>
+        <p>
+          Mi foco está en el frontend, aunque también me gusta entender cómo encajan el backend,
+          la base de datos y el resto de piezas para tener una visión más completa de cada proyecto.
+        </p>
+
+        <div class="about__stats">
+          <div class="about__stat">
+            <span class="about__stat-num">1</span>
+            <span class="about__stat-label"> experiencia empresarial</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num">10+</span>
+            <span class="about__stat-label">Tecnologías aprendidas</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num">3</span>
+            <span class="about__stat-label">Proyectos personales realizados</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about__timeline-col reveal">
+        <div class="about__tabs">
+          <button class="about__tab"
+                  [class.active]="activeTab === 'experience'"
+                  (click)="setTab('experience')">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+              <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+            </svg>
+            Experiencia
+          </button>
+          <button class="about__tab"
+                  [class.active]="activeTab === 'education'"
+                  (click)="setTab('education')">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+            </svg>
+            Formación
+          </button>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline__item" *ngFor="let item of filteredTimeline"
+               [class.timeline__item--udemy]="item.isUdemy">
+            <div class="timeline__dot"></div>
+            <div class="timeline__content">
+              <span class="timeline__date">{{ item.date }}</span>
+              <h3 class="timeline__title">{{ item.title }}</h3>
+              <span class="timeline__subtitle">{{ item.subtitle }}</span>
+              <p class="timeline__text">{{ item.text }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section id="proyectos" class="projects">
+  <div class="projects__container">
+
+    <div class="section-header reveal">
+      <span class="section-header__label">Lo que he construido</span>
+      <h2 class="section-header__title">Proyectos</h2>
+      <div class="section-header__line"></div>
+    </div>
+
+    <div class="projects__grid">
+      <article class="project-card reveal"
+               *ngFor="let project of projects; let i = index"
+               [style.transition-delay]="(i * 100) + 'ms'"
+               (click)="onClickCard(project)"
+               [class.project-card--clickable]="project.liveUrl">
+        <div class="project-card__visual">
+          <div class="project-card__bg-gradient" [style.background]="project.gradient"></div>
+          <img *ngIf="project.imageUrl" [src]="project.imageUrl" [alt]="project.title" class="project-card__image">
+          <span *ngIf="!project.imageUrl && !project.orbitalVisual" class="project-card__initials">SP</span>
+          <div *ngIf="project.orbitalVisual" class="project-card__orbital" aria-hidden="true">
+            <div class="project-card__orb-ring project-card__orb-ring--outer"></div>
+            <div class="project-card__orb-ring project-card__orb-ring--mid"></div>
+            <div class="project-card__orb-ring project-card__orb-ring--inner"></div>
+            <span class="project-card__orb-dot project-card__orb-dot--1"></span>
+            <span class="project-card__orb-dot project-card__orb-dot--2"></span>
+            <span class="project-card__orb-dot project-card__orb-dot--3"></span>
+          </div>
+          <div class="project-card__shine"></div>
+        </div>
+        <div class="project-card__body">
+          <h3 class="project-card__title">{{ project.title }}</h3>
+          <p class="project-card__desc">{{ project.description }}</p>
+          <div class="project-card__tags">
+            <span class="project-card__tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+          </div>
+          <a *ngIf="project.liveUrl" [href]="project.liveUrl" class="project-card__link" target="_blank" rel="noopener" (click)="$event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Ver sitio
+          </a>
+          <a *ngIf="project.githubUrl" [href]="project.githubUrl" class="project-card__link" target="_blank" rel="noopener" (click)="$event.stopPropagation()">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            Ver en GitHub
+          </a>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="contacto" class="contact reveal">
+  <div class="contact__bg-glow"></div>
+  <div class="contact__container">
+    <span class="contact__label">¿Hablamos?</span>
+    <h2 class="contact__title">¿Trabajamos juntos?</h2>
+    <p class="contact__text">
+      Estaría encantado de recibir contacto para nuevas oportunidades. No tengas duda en ofrecer hacerme cargo de tu web o de participar en tu equipo. ¡Seguro que aprenderé mucho en ambos casos!
+    </p>
+    <a href="mailto:spulido2c@gmail.com" class="neon-btn contact__btn">Contáctame</a>
+
+    <div class="contact__socials">
+      <a href="https://github.com/2puli2" target="_blank" rel="noopener" class="contact__social" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+        </svg>
+      </a>
+      <a href="https://linkedin.com/in/sergio-pulido-dominguez" target="_blank" rel="noopener" class="contact__social" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer">
+  <p>© 2026 <span>Sergio Pulido</span>. Diseñado y desarrollado con Angular 21.</p>
+</footer>

@@ -38,6 +38,28 @@
     &:last-child {
       padding-bottom: 0;
     }
+
+    &--udemy {
+      .timeline__dot {
+        background: $color-accent-1;
+        box-shadow: 0 0 10px rgba($color-accent-1, 0.6),
+                    0 0 22px rgba($color-accent-1, 0.25);
+      }
+
+      .timeline__date {
+        color: $color-accent-1;
+      }
+
+      .timeline__content {
+        border-color: rgba($color-accent-1, 0.25);
+
+        &:hover {
+          border-color: rgba($color-accent-1, 0.6);
+          background: $color-bg-card-hover;
+          @include neon-glow($color-accent-1, 'md');
+        }
+      }
+    }
   }
 
   &__marker {
@@ -93,6 +115,15 @@
     font-family: $font-heading;
     font-size: $font-size-base;
     color: $color-text-heading;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__subtitle {
+    display: block;
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: $color-secondary;
+    letter-spacing: 0.06em;
     margin-bottom: $spacing-sm;
   }
 
@@ -100,6 +131,7 @@
     font-size: $font-size-sm;
     color: $color-text-muted;
     line-height: 1.7;
+    text-align: justify;
   }
 }
 

@@ -117,6 +117,26 @@ a {
     padding: $spacing-sm $spacing-lg;
     font-size: $font-size-xs;
   }
+
+  &--accent {
+    border: 1px solid rgba($color-secondary-dark, 0.4);
+    color: $color-secondary-light;
+
+    &::before {
+      background: linear-gradient(90deg, transparent, rgba($color-accent-1, 0.15), transparent);
+    }
+
+    &:hover {
+      border-color: $color-accent-1;
+      color: $color-text-heading;
+      @include neon-glow($color-accent-1, 'md');
+      transform: scale(1.05);
+
+      &::before {
+        left: 100%;
+      }
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════
@@ -175,5 +195,6 @@ a {
     line-height: 1.8;
     margin-bottom: $spacing-2xl;
     max-width: 700px;
+    text-align: justify;
   }
 }

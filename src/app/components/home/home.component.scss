@@ -1,298 +1,1086 @@
-@use 'variables' as *;
+﻿@use 'variables' as *;
 @use 'mixins' as *;
 
-// ── Keyframes ────────────────────────────────────────
-@keyframes decoSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes decoPulsePrimary {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba($color-primary, 0.8); }
-  50%       { opacity: 0.4; box-shadow: 0 0 4px rgba($color-primary, 0.3); }
-}
-@keyframes decoPulseSecondary {
-  0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba($color-secondary, 0.9); }
-  50%       { opacity: 0.4; box-shadow: 0 0 4px rgba($color-secondary, 0.3); }
-}
-@keyframes decoPulseCyan {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba($color-accent-1, 0.8); }
-  50%       { opacity: 0.4; box-shadow: 0 0 4px rgba($color-accent-1, 0.3); }
+// ─────────────────────────────────────────────────
+// GLOBAL REVEAL  -  driven by IntersectionObserver
+// ─────────────────────────────────────────────────
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-// ── Component ────────────────────────────────────────
-.home {
+// ─────────────────────────────────────────────────
+// SECTION HEADER  -  shared title block
+// ─────────────────────────────────────────────────
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-3xl;
+
+  &__label {
+    display: block;
+    font-family: $font-alt-michroma;
+    font-size: $font-size-xs;
+    color: $color-primary;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: $color-text-heading;
+    letter-spacing: 0.06em;
+    margin-bottom: $spacing-md;
+  }
+
+  &__line {
+    width: 56px;
+    height: 2px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, $color-secondary, $color-primary);
+    border-radius: 1px;
+    box-shadow: 0 0 12px rgba($color-primary, 0.5);
+  }
+}
+
+// ─────────────────────────────────────────────────
+// HERO
+// ─────────────────────────────────────────────────
+.hero {
   position: relative;
   min-height: 100vh;
   padding-top: 70px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   overflow: hidden;
-  opacity: 0;
-  animation: fadeIn 0.8s ease forwards;
 
-  // ── Background glows
-  &__bg-glow {
+  &__glow {
     position: absolute;
-    width: 520px;
-    height: 520px;
+    width: 650px;
+    height: 650px;
     border-radius: 50%;
-    filter: blur(110px);
+    filter: blur(130px);
     pointer-events: none;
-    opacity: 0;
+    animation: bgPulse 5s ease-in-out infinite;
 
-    &:first-of-type {
-      background: radial-gradient(circle, rgba($color-primary, 0.13) 0%, transparent 70%);
-      top: -10%;
-      left: -15%;
-      animation: fadeIn 1.4s ease 0.2s forwards;
+    &--primary {
+      background: radial-gradient(circle, rgba($color-primary, 0.11), transparent 70%);
+      top: -18%;
+      left: -12%;
     }
 
     &--secondary {
-      background: radial-gradient(circle, rgba($color-secondary, 0.12) 0%, transparent 70%);
-      bottom: -12%;
-      right: -8%;
-      animation: fadeIn 1.4s ease 0.5s forwards;
+      background: radial-gradient(circle, rgba($color-secondary, 0.09), transparent 70%);
+      bottom: -18%;
+      right: -12%;
+      animation-delay: 2.5s;
     }
   }
 
-  // ── Hero grid
-  &__hero {
-    position: relative;
-    z-index: 10;
+  &__container {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 $spacing-3xl;
     align-items: center;
-    min-height: calc(100vh - 70px);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-3xl $spacing-xl;
+    gap: $spacing-3xl;
+
+    @include respond-to('tablet') {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: $spacing-2xl;
+    }
   }
 
-  // ── Left: content
   &__content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: $spacing-3xl 0;
-    opacity: 0;
-    animation: fadeIn 0.8s ease 0.3s forwards;
+    gap: $spacing-lg;
+    animation: heroReveal 0.9s ease 0.1s both;
   }
 
-  &__tag {
-    display: flex;
+  &__badge {
+    display: inline-flex;
     align-items: center;
     gap: $spacing-sm;
-    margin-bottom: $spacing-xl;
-  }
-
-  ::depp &__buttons {
-    background-color: $color-accent-1;
-  }
-
-  &__tag-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: $color-primary;
-    box-shadow: 0 0 8px rgba($color-accent-1, 0.9);
-    flex-shrink: 0;
-    animation: decoPulseCyan 2.5s ease-in-out infinite;
-  }
-
-  &__greeting {
+    padding: $spacing-xs $spacing-md;
+    border: 1px solid rgba($color-primary, 0.35);
+    border-radius: 50px;
+    background: rgba($color-primary, 0.07);
     font-family: $font-body;
-    font-size: $font-size-sm;
-    color: $color-text-muted;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin: 0;
-  }
+    font-size: $font-size-xs;
+    color: $color-primary;
+    letter-spacing: 0.06em;
+    width: fit-content;
 
-  &__name {
-    font-family: $font-heading;
-    font-size: 5.5rem;
-    font-weight: $font-weight-bold;
-    color: $color-text-heading;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: 0 0 $spacing-lg;
-
-    &--accent {
-      color: $color-secondary;
-      display: block;
-      @include neon-text-glow($color-secondary-dark);
+    @include respond-to('tablet') {
+      margin: 0 auto;
     }
   }
 
-  &__divider {
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, $color-secondary 0%, $color-primary 100%);
-    box-shadow: 0 0 12px rgba($color-primary, 0.5);
-    margin-bottom: $spacing-lg;
+  &__badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $color-accent-1;
+    flex-shrink: 0;
+    animation: heroBadgePulse 2s ease-in-out infinite;
   }
 
-  &__subtitle {
+  &__title {
+    font-family: $font-heading;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 1.15;
+    color: $color-text-heading;
+    letter-spacing: 0.02em;
+    overflow: visible;
+
+    &--accent {
+      display: block;
+      background: linear-gradient(130deg, $color-primary 0%, $color-secondary 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__role {
+    font-family: $font-alt-michroma;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  &__bio {
     font-family: $font-body;
     font-size: $font-size-md;
     color: $color-text-muted;
-    letter-spacing: 0.04em;
-    margin: 0 0 $spacing-2xl;
-    padding-left: $spacing-md;
-    border-left: 2px solid rgba($color-secondary, 0.65);
+    line-height: 1.85;
+    max-width: 500px;
+    text-align: justify;
+
+    @include respond-to('tablet') {
+      margin: 0 auto;
+      text-align: center;
+    }
   }
 
-  &__actions {
+  &__cta {
     display: flex;
-    flex-wrap: wrap;
-    gap: $spacing-md;
     align-items: center;
+    gap: $spacing-xl;
+    flex-wrap: wrap;
+
+    @include respond-to('tablet') {
+      justify-content: center;
+    }
   }
 
-  // ── Right: decorative panel
-  &__deco {
+  &__cta-ghost {
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-secondary-light;
+    }
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    @include respond-to('tablet') {
+      justify-content: center;
+    }
+  }
+
+  &__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba($color-secondary, 0.2);
+    border-radius: $radius-md;
+    color: $color-text-muted;
+    transition: all $transition-base;
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover {
+      color: $color-primary;
+      border-color: rgba($color-primary, 0.5);
+      background: rgba($color-primary, 0.07);
+      @include neon-glow($color-primary, 'sm');
+    }
+  }
+
+  &__visual {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    min-height: 400px;
-  }
+    height: 440px;
+    animation: heroReveal 0.9s ease 0.3s both;
 
-  &__deco-ring {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    border: 1px solid rgba($color-secondary-light, 0.35);
-    box-shadow: 0 0 20px rgba($color-secondary-light, 0.22);
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 24px;
-      border-radius: 50%;
-      border: 1px solid rgba($color-primary, 0.2);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 56px;
-      border-radius: 50%;
-      border: 1.5px dashed $color-secondary;
-      box-shadow: 0 0 14px rgba($color-primary-light, 0.55);
-      animation: decoSpin 22s linear infinite;
+    @include respond-to('tablet') {
+      height: 300px;
+      order: -1;
     }
   }
 
-  &__deco-dot {
+  &__ring {
     position: absolute;
     border-radius: 50%;
+
+    &--outer {
+      width: 390px;
+      height: 390px;
+      border: 1px solid rgba($color-secondary, 0.12);
+      animation: spinRing 35s linear infinite;
+
+      @include respond-to('tablet') {
+        width: 260px;
+        height: 260px;
+      }
+    }
+
+    &--mid {
+      width: 295px;
+      height: 295px;
+      border: 1px dashed rgba($color-primary, 0.16);
+      animation: spinRing 22s linear infinite reverse;
+
+      @include respond-to('tablet') {
+        width: 195px;
+        height: 195px;
+      }
+    }
+
+    &--inner {
+      width: 205px;
+      height: 205px;
+      border: 1.5px solid rgba($color-secondary-light, 0.18);
+      box-shadow: 0 0 35px rgba($color-secondary, 0.06);
+
+      @include respond-to('tablet') {
+        width: 138px;
+        height: 138px;
+      }
+    }
+  }
+
+  &__orbit {
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
 
     &--1 {
       width: 10px;
       height: 10px;
-      top: 12px;
-      right: 42px;
-      background: $color-secondary-dark;
-      box-shadow: 0 0 12px rgba($color-secondary-dark, 0.9);
-      animation: decoPulsePrimary 3s ease-in-out infinite;
+      margin: -5px 0 0 -5px;
+      background: $color-primary;
+      box-shadow: 0 0 12px rgba($color-primary, 0.9), 0 0 4px rgba($color-primary, 0.5);
+      animation: orbit1 9s linear infinite;
     }
 
     &--2 {
       width: 7px;
       height: 7px;
-      bottom: 38px;
-      left: 22px;
-      background: $color-primary;
-      box-shadow: 0 0 8px rgba($color-primary, 0.85);
-      animation: decoPulseCyan 3s ease-in-out 1s infinite;
+      margin: -3.5px 0 0 -3.5px;
+      background: $color-secondary;
+      box-shadow: 0 0 10px rgba($color-secondary, 0.9), 0 0 4px rgba($color-secondary, 0.4);
+      animation: orbit2 13s linear infinite;
     }
 
     &--3 {
       width: 5px;
       height: 5px;
-      top: 64px;
-      left: 2px;
-      background: $color-secondary;
-      box-shadow: 0 0 8px rgba($color-secondary, 0.8);
-      animation: decoPulseSecondary 3s ease-in-out 1.8s infinite;
+      margin: -2.5px 0 0 -2.5px;
+      background: $color-accent-1;
+      box-shadow: 0 0 8px rgba($color-accent-1, 1), 0 0 4px rgba($color-accent-1, 0.5);
+      animation: orbit3 7s linear infinite;
     }
   }
 
-  &__deco-label {
-    position: absolute;
-    bottom: $spacing-xl;
-    right: $spacing-xl;
-    font-family: $font-heading;
+  &__scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xl;
+    color: $color-text-muted;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__scroll-text {
+    font-family: $font-alt-michroma;
     font-size: $font-size-xs;
-    color: rgba($color-secondary, 0.5);
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    margin: 0;
-    writing-mode: vertical-rl;
+    opacity: 0.55;
+  }
+
+  &__scroll-line {
+    width: 1px;
+    height: 44px;
+    background: linear-gradient(180deg, $color-accent-1, transparent);
+    animation: scrollBounce 1.6s ease-in-out infinite;
   }
 }
 
-// ── Tablet ───────────────────────────────────────────
-@include respond-to('tablet') {
-  .home {
-    align-items: flex-start;
+// ─────────────────────────────────────────────────
+// SKILLS
+// ─────────────────────────────────────────────────
+.skills {
+  padding: $spacing-4xl $spacing-xl;
 
-    &__hero {
+  &__container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  @include respond-to('tablet') {
+    padding: $spacing-3xl $spacing-lg;
+  }
+
+  @include respond-to('mobile') {
+    padding: $spacing-4xl $spacing-md;
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    justify-content: center;
+  }
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-lg;
+  background: $color-bg-card;
+  border: 1px solid rgba($color-secondary, 0.18);
+  border-radius: 50px;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  color: $color-text;
+  cursor: default;
+  transition: all $transition-base;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    white-space: nowrap;
+  }
+
+  &:hover {
+    border-color: rgba($color-primary, 0.4);
+    background: $color-bg-card-hover;
+    transform: translateY(-3px);
+    color: $color-text-heading;
+  }
+}
+
+// ─────────────────────────────────────────────────
+// ABOUT
+// ─────────────────────────────────────────────────
+.about {
+  padding: $spacing-4xl $spacing-xl;
+
+  &__container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @include respond-to('tablet') {
+    padding: $spacing-3xl $spacing-lg;
+  }
+
+  @include respond-to('mobile') {
+    padding: $spacing-4xl $spacing-md;
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr 1.45fr;
+    gap: $spacing-3xl;
+    align-items: start;
+
+    @include respond-to('tablet') {
       grid-template-columns: 1fr;
-      padding: $spacing-xl $spacing-xl;
-      min-height: auto;
+      gap: $spacing-2xl;
+    }
+  }
+
+  &__intro {
+    p {
+      font-family: $font-body;
+      font-size: $font-size-md;
+      color: $color-text-muted;
+      line-height: 1.85;
+      margin-bottom: $spacing-lg;
+      text-align: justify;
+
+      strong {
+        color: $color-text-heading;
+      }
+    }
+  }
+
+  &__stats {
+    display: flex;
+    gap: $spacing-2xl;
+    margin-top: $spacing-xl;
+    padding-top: $spacing-xl;
+    border-top: 1px solid rgba($color-secondary, 0.12);
+    flex-wrap: wrap;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__stat-num {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    color: $color-primary;
+    line-height: 1;
+    @include neon-text-glow($color-primary);
+  }
+
+  &__stat-label {
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    letter-spacing: 0.04em;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: $spacing-xl;
+    border-bottom: 1px solid rgba($color-secondary, 0.15);
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+    margin-bottom: -1px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: $color-text-muted;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
     }
 
-    &__content {
-      padding: $spacing-xl 0 $spacing-2xl;
+    &.active {
+      color: $color-primary;
+      border-bottom-color: $color-primary;
     }
 
-    &__name {
-      font-size: 3.5rem;
-    }
-
-    &__deco {
-      display: none;
-    }
-
-    &__actions {
-      flex-direction: column;
-      align-items: flex-start;
+    &:hover:not(.active) {
+      color: $color-text;
     }
   }
 }
 
-// ── Mobile ───────────────────────────────────────────
-@include respond-to('mobile') {
-  .home {
-    &__hero {
-      padding: $spacing-lg $spacing-md;
+// ─────────────────────────────────────────────────
+// TIMELINE
+// ─────────────────────────────────────────────────
+.timeline {
+  position: relative;
+  padding-left: $spacing-xl;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: 0;
+    left: 7px;
+    width: 2px;
+    background: linear-gradient(180deg, $color-secondary 0%, rgba($color-secondary, 0.08) 100%);
+  }
+
+  &__item {
+    position: relative;
+    padding-bottom: $spacing-xl;
+
+    &:last-child {
+      padding-bottom: 0;
     }
 
-    &__name {
-      font-size: 2.6rem;
-    }
-
-    &__subtitle {
-      font-size: $font-size-base;
-      margin-bottom: $spacing-3xl;
-    }
-
-    &__actions {
-      width: 100%;
-      margin-top: $spacing-2xl;
-
-      .neon-btn {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-        color: $color-hover;
+    &--udemy {
+      .timeline__dot {
+        background: $color-accent-1;
+        box-shadow: 0 0 10px rgba($color-accent-1, 0.6), 0 0 22px rgba($color-accent-1, 0.25);
+        border-color: $color-bg-main;
       }
+
+      .timeline__date {
+        color: $color-accent-1;
+      }
+
+      .timeline__content {
+        border-color: rgba($color-accent-1, 0.25);
+
+        &:hover {
+          border-color: rgba($color-accent-1, 0.6);
+          background: $color-bg-card-hover;
+          @include neon-glow($color-accent-1, 'md');
+        }
+      }
+    }
+  }
+
+  &__dot {
+    position: absolute;
+    left: calc(-#{$spacing-xl} + 1px);
+    top: 14px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: $color-secondary;
+    box-shadow: 0 0 10px rgba($color-secondary, 0.7);
+    border: 2px solid $color-bg-main;
+    transition: background $transition-fast, box-shadow $transition-fast;
+
+    .timeline__item:hover & {
+      background: $color-primary;
+      box-shadow: 0 0 14px rgba($color-primary, 0.8);
+    }
+  }
+
+  &__content {
+    background: $color-bg-card;
+    border: 1px solid rgba($color-secondary, 0.18);
+    border-radius: $radius-lg;
+    padding: $spacing-lg $spacing-xl;
+    transition: all $transition-base;
+
+    &:hover {
+      border-color: rgba($color-primary, 0.4);
+      background: $color-bg-card-hover;
+      transform: translateX(4px);
+    }
+  }
+
+  &__date {
+    display: block;
+    font-family: $font-alt-michroma;
+    font-size: $font-size-xs;
+    color: $color-primary;
+    letter-spacing: 0.1em;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-base;
+    color: $color-text-heading;
+    margin-bottom: $spacing-xs;
+    letter-spacing: 0.04em;
+  }
+
+  &__subtitle {
+    display: block;
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: $color-secondary-light;
+    margin-bottom: $spacing-sm;
+    letter-spacing: 0.05em;
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    line-height: 1.75;
+    text-align: justify;
+  }
+}
+
+// ─────────────────────────────────────────────────
+// PROJECTS
+// ─────────────────────────────────────────────────
+.projects {
+  padding: $spacing-4xl $spacing-xl;
+
+  &__container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @include respond-to('tablet') {
+    padding: $spacing-3xl $spacing-lg;
+  }
+
+  @include respond-to('mobile') {
+    padding: $spacing-4xl $spacing-md;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: $spacing-xl;
+
+    @include respond-to('mobile') {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.project-card {
+  background: $color-bg-card;
+  border: 1px solid rgba($color-secondary, 0.18);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.45);
+    transform: translateY(-8px);
+    @include neon-glow($color-primary, 'sm');
+  }
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba($color-accent-1, 0.45);
+      transform: translateY(-8px);
+      @include neon-glow($color-accent-1, 'sm');
+    }
+  }
+
+  &__visual {
+    position: relative;
+    height: 148px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &__bg-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.8;
+    transition: opacity $transition-base;
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: transform $transition-base;
+  }
+
+  &__initials {
+    font-family: $font-heading;
+    font-size: 4.5rem;
+    font-weight: $font-weight-bold;
+    color: rgba($color-text-heading, 0.1);
+    letter-spacing: 0.12em;
+    pointer-events: none;
+    user-select: none;
+    z-index: 3;
+    transition: color $transition-base;
+  }
+
+  &:hover &__initials {
+    color: rgba($color-text-heading, 0.2);
+  }
+
+  &:hover &__bg-gradient {
+    opacity: 0.65;
+  }
+
+  &:hover &__image {
+    transform: scale(1.05);
+  }
+
+  &__shine {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 110%, rgba($color-secondary, 0.15), transparent 65%);
+    pointer-events: none;
+  }
+
+  &__body {
+    padding: $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: $spacing-sm;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-base;
+    color: $color-text-heading;
+    letter-spacing: 0.04em;
+  }
+
+  &__desc {
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    line-height: 1.75;
+    flex: 1;
+    text-align: justify;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-top: $spacing-sm;
+  }
+
+  &__tag {
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: $color-secondary-light;
+    background: rgba($color-secondary, 0.1);
+    border: 1px solid rgba($color-secondary, 0.22);
+    border-radius: $radius-sm;
+    padding: 2px $spacing-sm;
+    letter-spacing: 0.04em;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__orbital {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  &__orb-ring {
+    position: absolute;
+    border-radius: 50%;
+
+    &--outer {
+      width: 260px;
+      height: 260px;
+      top: -130px;
+      left: -130px;
+      border: 1px solid rgba($color-secondary, 0.18);
+      animation: cardSpinRing 35s linear infinite;
+    }
+
+    &--mid {
+      width: 190px;
+      height: 190px;
+      top: -95px;
+      left: -95px;
+      border: 1px dashed rgba($color-primary, 0.22);
+      animation: cardSpinRing 22s linear infinite reverse;
+    }
+
+    &--inner {
+      width: 130px;
+      height: 130px;
+      top: -65px;
+      left: -65px;
+      border: 1.5px solid rgba($color-secondary-light, 0.24);
+      box-shadow: 0 0 20px rgba($color-secondary, 0.06);
+    }
+  }
+
+  &__orb-dot {
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+
+    &--1 {
+      width: 8px;
+      height: 8px;
+      margin: -4px 0 0 -4px;
+      background: $color-primary;
+      box-shadow: 0 0 10px rgba($color-primary, 0.9), 0 0 4px rgba($color-primary, 0.5);
+      animation: cardOrbit1 9s linear infinite;
+    }
+
+    &--2 {
+      width: 6px;
+      height: 6px;
+      margin: -3px 0 0 -3px;
+      background: $color-secondary;
+      box-shadow: 0 0 8px rgba($color-secondary, 0.9), 0 0 3px rgba($color-secondary, 0.4);
+      animation: cardOrbit2 13s linear infinite;
+    }
+
+    &--3 {
+      width: 5px;
+      height: 5px;
+      margin: -2.5px 0 0 -2.5px;
+      background: $color-accent-1;
+      box-shadow: 0 0 7px rgba($color-accent-1, 1), 0 0 3px rgba($color-accent-1, 0.5);
+      animation: cardOrbit3 7s linear infinite;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────
+// CONTACT
+// ─────────────────────────────────────────────────
+.contact {
+  position: relative;
+  padding: $spacing-4xl $spacing-xl;
+  text-align: center;
+  overflow: hidden;
+
+  @include respond-to('tablet') {
+    padding: $spacing-3xl $spacing-lg;
+  }
+
+  @include respond-to('mobile') {
+    padding: $spacing-4xl $spacing-md;
+  }
+
+  &__bg-glow {
+    position: absolute;
+    width: 600px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba($color-secondary, 0.07), transparent 70%);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: blur(70px);
+    pointer-events: none;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  &__label {
+    display: block;
+    font-family: $font-alt-michroma;
+    font-size: $font-size-xs;
+    color: $color-primary;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: $color-text-heading;
+    letter-spacing: 0.06em;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: $font-size-md;
+    color: $color-text-muted;
+    line-height: 1.85;
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__btn {
+    font-size: $font-size-base !important;
+    padding: $spacing-md $spacing-2xl !important;
+  }
+
+  &__socials {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-top: $spacing-2xl;
+  }
+
+  &__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba($color-secondary, 0.22);
+    border-radius: $radius-md;
+    color: $color-text-muted;
+    transition: all $transition-base;
+
+    svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    &:hover {
+      color: $color-primary;
+      border-color: rgba($color-primary, 0.5);
+      background: rgba($color-primary, 0.07);
+      @include neon-glow($color-primary, 'sm');
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────
+// FOOTER
+// ─────────────────────────────────────────────────
+.site-footer {
+  padding: $spacing-xl $spacing-xl;
+  text-align: center;
+  border-top: 1px solid rgba($color-secondary, 0.1);
+  margin-top: $spacing-3xl;
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: rgba($color-text-muted, 0.45);
+
+  span {
+    color: rgba($color-primary, 0.7);
+  }
+}
+
+// ─────────────────────────────────────────────────
+// RESPONSIVE  -  Tablet
+// ─────────────────────────────────────────────────
+@include respond-to('tablet') {
+  .skills,
+  .about,
+  .projects,
+  .contact {
+    padding: $spacing-2xl $spacing-lg;
+  }
+
+  .hero {
+    &__orbit {
+      &--1 { animation-name: orbit1-tablet; }
+      &--2 { animation-name: orbit2-tablet; }
+      &--3 { animation-name: orbit3-tablet; }
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────
+// RESPONSIVE  -  Mobile
+// ─────────────────────────────────────────────────
+@include respond-to('mobile') {
+  .hero {
+    &__container {
+      padding: $spacing-xl $spacing-md;
+      gap: $spacing-xl;
+    }
+
+    &__bio {
+      font-size: $font-size-base;
+    }
+
+    &__cta {
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-md;
+    }
+
+    &__visual {
+      height: 240px;
+    }
+
+    &__ring {
+      &--outer { width: 200px; height: 200px; }
+      &--mid   { width: 150px; height: 150px; }
+      &--inner { width: 106px; height: 106px; }
+    }
+
+    &__orbit {
+      &--1 { animation-name: orbit1-mobile; }
+      &--2 { animation-name: orbit2-mobile; }
+      &--3 { animation-name: orbit3-mobile; }
+    }
+  }
+
+  .section-header {
+    margin-bottom: $spacing-2xl;
+
+    &__title {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .about {
+    &__stats {
+      gap: $spacing-lg;
     }
   }
 }

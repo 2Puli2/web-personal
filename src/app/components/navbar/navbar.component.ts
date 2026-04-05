@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -7,6 +7,12 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   isMenuOpen = false;
+  isScrolled = false;
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.isScrolled = window.scrollY > 60;
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

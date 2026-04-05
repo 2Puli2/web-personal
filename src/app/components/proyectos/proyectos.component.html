@@ -1,13 +1,13 @@
 <section class="section-page" [class.visible]="isVisible">
   <div class="section-page__container">
-    <a routerLink="/home" class="section-page__back">← Volver a home</a>
+    <a routerLink="/" class="section-page__back">← Volver al portfolio</a>
     <div class="section-page__header">
       <h1 class="section-page__title">Proyectos</h1>
       <div class="section-page__accent-line"></div>
     </div>
     <p class="section-page__intro-text">
-      Listado de proyectos destacados con enfoque en diseño, innovación y nuevas tecnologías.
-      Espacio reservado para mi portfolio.
+      Una selección de proyectos que resumen cómo trabajo: contexto real, atención al detalle,
+      foco en producto y soluciones pensadas para durar.
     </p>
     <div class="projects-grid">
       <div class="project-card" *ngFor="let project of projects; let i = index">
@@ -28,6 +28,12 @@
         <p class="project-card__desc">{{ project.description }}</p>
         <div class="project-card__tags">
           <span class="project-card__tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+        </div>
+        <div class="project-card__links" *ngIf="project.githubUrl || project.liveUrl">
+          <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank"
+             rel="noopener noreferrer" class="project-card__link" (click)="$event.stopPropagation()">
+            GitHub
+          </a>
         </div>
       </div>
     </div>

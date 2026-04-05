@@ -75,12 +75,41 @@
     line-height: 1.7;
     margin-bottom: $spacing-lg;
     flex: 1;
+    text-align: justify;
   }
 
   &__tags {
     display: flex;
     flex-wrap: wrap;
     gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+
+  &__links {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-sm;
+  }
+
+  &__link {
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: $color-secondary;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-secondary-light;
+    }
+
+    &--live {
+      color: $color-primary;
+
+      &:hover {
+        color: $color-primary-light;
+      }
+    }
   }
 
   &__tag {

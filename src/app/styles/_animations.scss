@@ -35,6 +35,102 @@
   50%      { box-shadow: 0 0 20px rgba(192, 68, 255, 0.25); }
 }
 
+// ─────────────────────────────────────────────────
+// HERO & ORBITAL ANIMATIONS (for production stability)
+// ─────────────────────────────────────────────────
+@keyframes orbit1 {
+  from { transform: rotate(0deg)   translateX(195px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(195px) rotate(-360deg); }
+}
+
+@keyframes orbit2 {
+  from { transform: rotate(120deg)   translateX(149px) rotate(-120deg); }
+  to   { transform: rotate(480deg)   translateX(149px) rotate(-480deg); }
+}
+
+@keyframes orbit3 {
+  from { transform: rotate(240deg)   translateX(102px)  rotate(-240deg); }
+  to   { transform: rotate(600deg)   translateX(102px)  rotate(-600deg); }
+}
+
+@keyframes spinRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes heroBadgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba($color-primary, 0.5); }
+  50%       { box-shadow: 0 0 0 5px rgba($color-primary, 0); }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%       { transform: translateY(10px); opacity: 0.3; }
+}
+
+@keyframes bgPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Card orbital radii: outer 130px / mid 95px / inner 65px
+@keyframes cardOrbit1 {
+  from { transform: rotate(0deg)   translateX(130px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
+}
+
+@keyframes cardOrbit2 {
+  from { transform: rotate(120deg) translateX(95px)  rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(95px)  rotate(-480deg); }
+}
+
+@keyframes cardOrbit3 {
+  from { transform: rotate(240deg) translateX(65px)  rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(65px)  rotate(-600deg); }
+}
+
+@keyframes cardSpinRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+// Tablet orbit radii: outer 130px / mid 97px / inner 69px
+@keyframes orbit1-tablet {
+  from { transform: rotate(0deg)   translateX(130px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
+}
+
+@keyframes orbit2-tablet {
+  from { transform: rotate(120deg) translateX(97px) rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(97px) rotate(-480deg); }
+}
+
+@keyframes orbit3-tablet {
+  from { transform: rotate(240deg) translateX(69px) rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(69px) rotate(-600deg); }
+}
+
+// Mobile orbit radii: outer 100px / mid 75px / inner 53px
+@keyframes orbit1-mobile {
+  from { transform: rotate(0deg)   translateX(100px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+}
+
+@keyframes orbit2-mobile {
+  from { transform: rotate(120deg) translateX(75px) rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(75px) rotate(-480deg); }
+}
+
+@keyframes orbit3-mobile {
+  from { transform: rotate(240deg) translateX(53px) rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(53px) rotate(-600deg); }
+}
+
 // ── Utility classes ────────────────────────────────
 .animate-fade-in       { animation: fadeIn      0.6s ease forwards; }
 .animate-fade-in-left  { animation: fadeInLeft  0.6s ease forwards; }

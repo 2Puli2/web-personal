@@ -1,22 +1,24 @@
 <section class="section-page" [class.visible]="isVisible">
   <div class="section-page__container">
-    <a routerLink="/home" class="section-page__back">← Volver a home</a>
+    <a routerLink="/" class="section-page__back">← Volver al portfolio</a>
     <div class="section-page__header">
       <h1 class="section-page__title">Formación y experiencia</h1>
       <div class="section-page__accent-line"></div>
     </div>
     <p class="section-page__intro-text">
-      Formado en ingeniería de software y especializado en desarrollo frontend,
-      diseño de interfaces y experiencias interactivas.
+      Mi recorrido une formación, proyectos personales y una primera experiencia profesional que me está ayudando
+      a aprender cómo se trabaja de verdad y a seguir creciendo con una base cada vez más sólida.
     </p>
     <div class="timeline">
-      <div class="timeline__item" *ngFor="let item of timeline; let i = index">
+      <div class="timeline__item" *ngFor="let item of timeline; let i = index"
+           [class.timeline__item--udemy]="item.isUdemy">
         <div class="timeline__marker">
           <span class="timeline__dot"></span>
         </div>
         <div class="timeline__content">
           <span class="timeline__date">{{ item.date }}</span>
           <h3 class="timeline__title">{{ item.title }}</h3>
+          <span class="timeline__subtitle">{{ item.subtitle }}</span>
           <p class="timeline__text">{{ item.text }}</p>
         </div>
       </div>
